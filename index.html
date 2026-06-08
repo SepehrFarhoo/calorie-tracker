@@ -1,0 +1,678 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calorie Tracker</title>
+
+    <style>
+      :root {
+        --bg: #ecfdf5;
+        --card: #ffffff;
+        --text: #1e293b;
+        --accent: #2563eb;
+        --muted: #64748b;
+        --border: #e2e8f0;
+      }
+
+      body.dark {
+        --bg: #0f172a;
+        --card: #16213a;
+        --text: #e2e8f0;
+        --accent: #3b82f6;
+        --muted: #94a3b8;
+        --border: #1e293b;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui;
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      /* NAV */
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 18px;
+        background: var(--card);
+        border-bottom: 1px solid var(--border);
+      }
+
+      /* THEME TOGGLE */
+
+      .theme-toggle {
+        width: 60px;
+        height: 30px;
+        background: #e2e8f0;
+        border-radius: 30px;
+        position: relative;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+
+      body.dark .theme-toggle {
+        background: #334155;
+      }
+
+      .toggle-circle {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: white;
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        transition: all 0.3s ease;
+      }
+
+      body.dark .toggle-circle {
+        left: 33px;
+        background: #0f172a;
+        color: #facc15;
+      }
+
+      /* TABS */
+
+      .tabs {
+        display: flex;
+        gap: 10px;
+        padding: 10px 18px;
+      }
+
+      .tab {
+        padding: 6px 12px;
+        border-radius: 20px;
+        cursor: pointer;
+        background: var(--card);
+        border: 1px solid var(--border);
+        font-size: 14px;
+      }
+
+      .tab.active {
+        background: var(--accent);
+        color: white;
+        border: none;
+      }
+
+      .container {
+        max-width: 650px;
+        margin: auto;
+        padding: 15px;
+      }
+
+      .card {
+        background: var(--card);
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        border: 1px solid var(--border);
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 8px;
+        margin: 6px 0;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      button.primary {
+        background: var(--accent);
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      button.danger {
+        background: #dc2626;
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .progress {
+        background: var(--border);
+        height: 20px;
+        border-radius: 20px;
+        overflow: hidden;
+        margin: 10px 0;
+      }
+
+      .progress-bar {
+        background: var(--accent);
+        height: 100%;
+        width: 0%;
+        text-align: center;
+        color: white;
+        font-size: 12px;
+        line-height: 20px;
+      }
+
+      .entry {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--border);
+        padding: 8px 0;
+        font-size: 14px;
+      }
+
+      .search-results {
+        max-height: 150px;
+        overflow-y: auto;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        margin-top: 5px;
+      }
+
+      .search-item {
+        padding: 6px;
+        cursor: pointer;
+      }
+
+      .search-item:hover {
+        background: var(--border);
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="nav">
+      <h3>Calorie Tracker</h3>
+
+      <div class="theme-toggle" onclick="toggleDark()">
+        <div id="toggleCircle" class="toggle-circle">☀️</div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('entries', event)">
+        Entries
+      </div>
+      <div class="tab" onclick="switchTab('info', event)">Info</div>
+    </div>
+
+    <div class="container">
+      <div id="entriesTab">
+        <div class="card">
+          <h4>Daily Progress</h4>
+          <div class="progress">
+            <div id="progressBar" class="progress-bar">0%</div>
+          </div>
+          <p>Calories left: <b id="calLeft">0</b></p>
+          <button class="danger" onclick="resetDay()">Reset Day</button>
+        </div>
+
+        <div class="card">
+          <h4>Add Food</h4>
+          <input
+            id="foodSearch"
+            placeholder="Search food..."
+            oninput="searchFood()"
+          />
+          <div id="searchResults" class="search-results"></div>
+          <input id="foodAmount" type="number" placeholder="Amount" />
+          <button class="primary" onclick="addFood()">Add Food</button>
+        </div>
+
+        <div class="card">
+          <h4>Add Exercise</h4>
+          <select id="exerciseSelect"></select>
+          <input id="exerciseMinutes" type="number" placeholder="Minutes" />
+          <button class="primary" onclick="addExercise()">Add Exercise</button>
+        </div>
+
+        <div class="card">
+          <h4>Today's Entries</h4>
+          <div id="entryList"></div>
+        </div>
+      </div>
+
+      <div id="infoTab" style="display: none">
+        <div class="card">
+          <h4>Your Info</h4>
+          <p id="infoSummary">No info saved.</p>
+        </div>
+
+        <div class="card">
+          <h4>Edit Info</h4>
+
+          <input id="age" type="number" placeholder="Age" />
+
+          <select id="sex">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+
+          <input id="height" type="number" placeholder="Height cm" />
+          <input id="weight" type="number" placeholder="Weight kg" />
+          <input id="goalWeight" type="number" placeholder="Goal weight" />
+          <input
+            id="goalSpeed"
+            type="number"
+            step="0.1"
+            placeholder="kg per week"
+          />
+
+          <select id="activity">
+            <option value="1.2">Sedentary</option>
+            <option value="1.375">Light</option>
+            <option value="1.55">Moderate</option>
+            <option value="1.725">Very active</option>
+          </select>
+
+          <button class="primary" onclick="saveInfo()">Save</button>
+
+          <p>Daily Target: <b id="targetCalories">0</b></p>
+        </div>
+
+        <div class="card">
+          <h4>Add Custom Food</h4>
+          <input id="customFoodName" placeholder="Food name" />
+          <input
+            id="customFoodCalories"
+            type="number"
+            placeholder="Calories per unit"
+          />
+          <input id="customFoodUnit" placeholder="Unit" />
+          <button class="primary" onclick="addCustomFood()">
+            Add Custom Food
+          </button>
+
+          <h5>Your Custom Foods</h5>
+          <div id="customFoodList"></div>
+        </div>
+
+        <div class="card">
+          <h4>Add Custom Exercise</h4>
+          <input id="customExerciseName" placeholder="Exercise name" />
+          <input
+            id="customExerciseCalories"
+            type="number"
+            placeholder="Calories per minute"
+          />
+          <button class="primary" onclick="addCustomExercise()">
+            Add Exercise
+          </button>
+
+          <h5>Your Custom Exercises</h5>
+          <div id="customExerciseList"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer>Developed by Sepehr</footer>
+
+    <script>
+      /* DARK MODE */
+
+      function applyDarkMode() {
+        const dark = localStorage.getItem("darkMode") === "true";
+        document.body.classList.toggle("dark", dark);
+        updateToggleIcon();
+      }
+
+      function toggleDark() {
+        const newState = !document.body.classList.contains("dark");
+        localStorage.setItem("darkMode", newState);
+        applyDarkMode();
+      }
+
+      function updateToggleIcon() {
+        toggleCircle.textContent = document.body.classList.contains("dark")
+          ? "🌙"
+          : "☀️";
+      }
+
+      /* DATA */
+
+      const defaultFoods = {
+        Egg: { cal: 70, unit: "1" },
+        Apple: { cal: 95, unit: "1" },
+        Banana: { cal: 105, unit: "1" },
+        Rice: { cal: 20, unit: "tbsp" },
+        Bread: { cal: 80, unit: "slice" },
+        Chicken: { cal: 165, unit: "100g" },
+      };
+
+      const defaultExercises = {
+        Walking: 5,
+        Running: 10,
+        Cycling: 8,
+      };
+
+      let customFoods = JSON.parse(localStorage.getItem("customFoods")) || {};
+      let customExercises =
+        JSON.parse(localStorage.getItem("customExercises")) || {};
+
+      let foods = { ...defaultFoods, ...customFoods };
+      let exercises = { ...defaultExercises, ...customExercises };
+
+      let daily = JSON.parse(localStorage.getItem("daily")) || {
+        date: "",
+        entries: [],
+      };
+
+      let selectedFood = null;
+
+      /* DATE */
+
+      function tehranDate() {
+        return new Date().toLocaleDateString("en-CA", {
+          timeZone: "Asia/Tehran",
+        });
+      }
+
+      function checkReset() {
+        if (daily.date !== tehranDate()) {
+          daily = { date: tehranDate(), entries: [] };
+          saveDaily();
+        }
+      }
+
+      function saveDaily() {
+        localStorage.setItem("daily", JSON.stringify(daily));
+      }
+
+      /* SEARCH */
+
+      function searchFood() {
+        let q = foodSearch.value.toLowerCase();
+        searchResults.innerHTML = "";
+
+        Object.keys(foods)
+          .filter((f) => f.toLowerCase().includes(q))
+          .forEach((f) => {
+            searchResults.innerHTML += `<div class="search-item" onclick="selectFood('${f}')">${f}</div>`;
+          });
+      }
+
+      function selectFood(name) {
+        selectedFood = name;
+        foodSearch.value = name;
+        searchResults.innerHTML = "";
+      }
+
+      /* TARGET */
+
+      function calculateTarget() {
+        let info = JSON.parse(localStorage.getItem("userInfo"));
+        if (!info) return 0;
+
+        let bmr =
+          info.sex === "male"
+            ? 10 * info.weight + 6.25 * info.height - 5 * info.age + 5
+            : 10 * info.weight + 6.25 * info.height - 5 * info.age - 161;
+
+        let tdee = bmr * info.activity;
+        let adjust = (info.goalSpeed * 7700) / 7;
+
+        return info.goalWeight < info.weight
+          ? Math.round(tdee - adjust)
+          : Math.round(tdee + adjust);
+      }
+
+      /* UI */
+
+      function updateUI() {
+        checkReset();
+
+        let target = calculateTarget();
+        targetCalories.innerText = target;
+
+        let consumed = 0;
+        let burned = 0;
+
+        daily.entries.forEach((e) => {
+          if (e.type === "food") consumed += e.cal;
+          if (e.type === "exercise") burned += e.cal;
+        });
+
+        let net = consumed - burned;
+
+        let percent = target ? Math.min((net / target) * 100, 100) : 0;
+
+        progressBar.style.width = percent + "%";
+        progressBar.innerText = Math.round(percent) + "%";
+
+        calLeft.innerText = Math.round(target - net);
+
+        entryList.innerHTML = "";
+
+        daily.entries.forEach((e, i) => {
+          entryList.innerHTML += `
+<div class="entry">
+<span>${e.text}</span>
+<button onclick="deleteEntry(${i})">x</button>
+</div>`;
+        });
+
+        loadInfoSummary();
+      }
+
+      /* ENTRIES */
+
+      function addFood() {
+        let amount = parseFloat(foodAmount.value);
+        if (!selectedFood || !amount) return;
+
+        let cal = foods[selectedFood].cal * amount;
+
+        daily.entries.push({
+          type: "food",
+          cal: cal,
+          text: `${selectedFood} +${Math.round(cal)} kcal`,
+        });
+
+        saveDaily();
+        updateUI();
+      }
+
+      function addExercise() {
+        let e = exerciseSelect.value;
+        let m = parseFloat(exerciseMinutes.value);
+        if (!m) return;
+
+        let cal = exercises[e] * m;
+
+        daily.entries.push({
+          type: "exercise",
+          cal: cal,
+          text: `${e} ${m}min -${Math.round(cal)} kcal`,
+        });
+
+        saveDaily();
+        updateUI();
+      }
+
+      function deleteEntry(i) {
+        daily.entries.splice(i, 1);
+        saveDaily();
+        updateUI();
+      }
+
+      function resetDay() {
+        if (confirm("Reset today?")) {
+          daily = { date: tehranDate(), entries: [] };
+          saveDaily();
+          updateUI();
+        }
+      }
+
+      /* USER INFO */
+
+      function saveInfo() {
+        let info = {
+          age: +age.value,
+          sex: sex.value,
+          height: +height.value,
+          weight: +weight.value,
+          goalWeight: +goalWeight.value,
+          goalSpeed: +goalSpeed.value,
+          activity: +activity.value,
+        };
+
+        localStorage.setItem("userInfo", JSON.stringify(info));
+
+        updateUI();
+      }
+
+      function loadInfoSummary() {
+        let info = JSON.parse(localStorage.getItem("userInfo"));
+
+        if (!info) {
+          infoSummary.innerText = "No info saved.";
+          return;
+        }
+
+        infoSummary.innerText = `Age ${info.age} • ${info.weight}kg → ${info.goalWeight}kg`;
+
+        age.value = info.age;
+        height.value = info.height;
+        weight.value = info.weight;
+        goalWeight.value = info.goalWeight;
+        goalSpeed.value = info.goalSpeed;
+        sex.value = info.sex;
+        activity.value = info.activity;
+      }
+
+      /* CUSTOM FOODS */
+
+      function addCustomFood() {
+        let name = customFoodName.value;
+        let cal = parseFloat(customFoodCalories.value);
+        let unit = customFoodUnit.value;
+
+        if (!name || !cal || !unit) return;
+
+        customFoods[name] = { cal, unit };
+
+        localStorage.setItem("customFoods", JSON.stringify(customFoods));
+
+        foods = { ...defaultFoods, ...customFoods };
+
+        renderCustomFoods();
+      }
+
+      function deleteCustomFood(name) {
+        delete customFoods[name];
+
+        localStorage.setItem("customFoods", JSON.stringify(customFoods));
+
+        foods = { ...defaultFoods, ...customFoods };
+
+        renderCustomFoods();
+      }
+
+      function renderCustomFoods() {
+        customFoodList.innerHTML = "";
+
+        Object.keys(customFoods).forEach((name) => {
+          customFoodList.innerHTML += `
+<div class="entry">
+<span>${name}</span>
+<button onclick="deleteCustomFood('${name}')">x</button>
+</div>`;
+        });
+      }
+
+      /* CUSTOM EXERCISES */
+
+      function addCustomExercise() {
+        let name = customExerciseName.value;
+        let cal = parseFloat(customExerciseCalories.value);
+
+        if (!name || !cal) return;
+
+        customExercises[name] = cal;
+
+        localStorage.setItem(
+          "customExercises",
+          JSON.stringify(customExercises),
+        );
+
+        exercises = { ...defaultExercises, ...customExercises };
+
+        loadExercises();
+        renderCustomExercises();
+      }
+
+      function deleteCustomExercise(name) {
+        delete customExercises[name];
+
+        localStorage.setItem(
+          "customExercises",
+          JSON.stringify(customExercises),
+        );
+
+        exercises = { ...defaultExercises, ...customExercises };
+
+        loadExercises();
+        renderCustomExercises();
+      }
+
+      function renderCustomExercises() {
+        customExerciseList.innerHTML = "";
+
+        Object.keys(customExercises).forEach((name) => {
+          customExerciseList.innerHTML += `
+<div class="entry">
+<span>${name}</span>
+<button onclick="deleteCustomExercise('${name}')">x</button>
+</div>`;
+        });
+      }
+
+      function loadExercises() {
+        exerciseSelect.innerHTML = "";
+
+        Object.keys(exercises).forEach((e) => {
+          exerciseSelect.innerHTML += `<option>${e}</option>`;
+        });
+      }
+
+      /* NAV */
+
+      function switchTab(tab, e) {
+        entriesTab.style.display = tab === "entries" ? "block" : "none";
+        infoTab.style.display = tab === "info" ? "block" : "none";
+
+        document
+          .querySelectorAll(".tab")
+          .forEach((t) => t.classList.remove("active"));
+
+        e.target.classList.add("active");
+      }
+
+      /* INIT */
+
+      applyDarkMode();
+      loadExercises();
+      renderCustomFoods();
+      renderCustomExercises();
+      loadInfoSummary();
+      updateUI();
+    </script>
+  </body>
+</html>
