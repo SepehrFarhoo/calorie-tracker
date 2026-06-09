@@ -357,169 +357,177 @@
     <footer>Developed by Sepehr</footer>
 
     <script>
-      /* DARK MODE */
 
-      function applyDarkMode() {
-        const dark = localStorage.getItem("darkMode") === "true";
-        document.body.classList.toggle("dark", dark);
-        updateToggleIcon();
-      }
+     /* DARK MODE */
 
-      function toggleDark() {
-        const newState = !document.body.classList.contains("dark");
-        localStorage.setItem("darkMode", newState);
-        applyDarkMode();
-      }
+function applyDarkMode() {
+const dark = localStorage.getItem("darkMode") === "true";
+document.body.classList.toggle("dark", dark);
+updateToggleIcon();
+}
 
-      function updateToggleIcon() {
-        toggleCircle.textContent = document.body.classList.contains("dark")
-          ? "🌙"
-          : "☀️";
-      }
+function toggleDark() {
+const newState = !document.body.classList.contains("dark");
+localStorage.setItem("darkMode", newState);
+applyDarkMode();
+}
 
-      /* DATA */
+function updateToggleIcon() {
+toggleCircle.textContent = document.body.classList.contains("dark")
+? "🌙"
+: "☀️";
+}
 
-      const defaultFoods = {
-        "Egg Boiled": { cal: 80, unit: "1 large" },
-        "Egg Fried": { cal: 120, unit: "1 large" },
+/* DATA */
 
-        Banana: { cal: 130, unit: "1 large" },
-        Apple: { cal: 110, unit: "1 large" },
-        Orange: { cal: 90, unit: "1 large" },
-        Tomato: { cal: 35, unit: "1 large" },
+const defaultFoods = {
+"Egg Boiled": { cal: 80, unit: "1 large" },
+"Egg Fried": { cal: 120, unit: "1 large" },
 
-        Latte: { cal: 180, unit: "1 medium" },
-        Cortado: { cal: 100, unit: "1 medium" },
-        "Black Coffee": { cal: 5, unit: "1 cup" },
-        Tea: { cal: 0, unit: "1 cup" },
+Banana: { cal: 130, unit: "1 large" },
+Apple: { cal: 110, unit: "1 large" },
+Orange: { cal: 90, unit: "1 large" },
+Tomato: { cal: 35, unit: "1 large" },
 
-        "Sugar Cube": { cal: 20, unit: "1 cube" },
+Latte: { cal: 180, unit: "1 medium" },
+Cortado: { cal: 100, unit: "1 medium" },
+"Black Coffee": { cal: 5, unit: "1 cup" },
+Tea: { cal: 0, unit: "1 cup" },
 
-        Milk: { cal: 170, unit: "1 glass" },
-        Doogh: { cal: 120, unit: "1 glass" },
+"Sugar Cube": { cal: 20, unit: "1 cube" },
 
-        "Rice Persian": { cal: 350, unit: "5 tbsp" },
-        "Restaurant Rice": { cal: 500, unit: "1 plate" },
+Milk: { cal: 170, unit: "1 glass" },
+Doogh: { cal: 120, unit: "1 glass" },
 
-        "Sangak Bread": { cal: 100, unit: "1 piece" },
-        "Barbari Bread": { cal: 120, unit: "1 piece" },
-        "Toast Bread": { cal: 90, unit: "1 slice" },
+"Rice Persian": { cal: 350, unit: "5 tbsp" },
+"Restaurant Rice": { cal: 500, unit: "1 plate" },
 
-        Gheyme: { cal: 250, unit: "5 tbsp" },
-        "Ghorme Sabzi": { cal: 220, unit: "5 tbsp" },
+"Sangak Bread": { cal: 100, unit: "1 piece" },
+"Barbari Bread": { cal: 120, unit: "1 piece" },
+"Toast Bread": { cal: 90, unit: "1 slice" },
 
-        "Jooje Kebab": { cal: 420, unit: "1 skewer" },
-        Koobideh: { cal: 350, unit: "1 skewer" },
+Gheyme: { cal: 250, unit: "5 tbsp" },
+"Ghorme Sabzi": { cal: 220, unit: "5 tbsp" },
 
-        "Burger Double": { cal: 950, unit: "1 burger" },
+"Jooje Kebab": { cal: 420, unit: "1 skewer" },
+Koobideh: { cal: 350, unit: "1 skewer" },
 
-        "Chicken Breast": { cal: 350, unit: "1 large" },
-        "Chicken Thigh": { cal: 280, unit: "1 large" },
+"Burger Double": { cal: 950, unit: "1 burger" },
 
-        "Fish Fried": { cal: 450, unit: "half fish" },
+"Chicken Breast": { cal: 350, unit: "1 large" },
+"Chicken Thigh": { cal: 280, unit: "1 large" },
 
-        "Pizza Slice": { cal: 450, unit: "1 slice" },
+"Fish Fried": { cal: 450, unit: "half fish" },
 
-        "French Fries": { cal: 120, unit: "10 fries" },
+"Pizza Slice": { cal: 450, unit: "1 slice" },
 
-        Chips: { cal: 250, unit: "1 small bag" },
+"French Fries": { cal: 120, unit: "10 fries" },
 
-        Popcorn: { cal: 180, unit: "1 bowl" },
-        "Potato Baked": { cal: 250, unit: "1 large" },
-        "Ice Cream": { cal: 150, unit: "1 stick" },
+Chips: { cal: 250, unit: "1 small bag" },
 
-        "Dark Chocolate": { cal: 40, unit: "1 piece" },
-        "Milk Chocolate": { cal: 50, unit: "1 piece" },
+Popcorn: { cal: 180, unit: "1 bowl" },
+"Potato Baked": { cal: 250, unit: "1 large" },
+"Ice Cream": { cal: 150, unit: "1 stick" },
 
-        Dates: { cal: 30, unit: "1 date" },
+"Dark Chocolate": { cal: 40, unit: "1 piece" },
+"Milk Chocolate": { cal: 50, unit: "1 piece" },
 
-        Almonds: { cal: 45, unit: "5 large" },
-        Pistachios: { cal: 50, unit: "5 large" },
-        Walnut: { cal: 55, unit: "1 large" },
-        Hazelnuts: { cal: 45, unit: "5 large" },
+Dates: { cal: 30, unit: "1 date" },
 
-        "Mixed Nuts": { cal: 220, unit: "1 handful" },
+Almonds: { cal: 45, unit: "5 large" },
+Pistachios: { cal: 50, unit: "5 large" },
+Walnut: { cal: 55, unit: "1 large" },
+Hazelnuts: { cal: 45, unit: "5 large" },
 
-        Oil: { cal: 120, unit: "1 tbsp" },
-        "Mayo Tbsp": { cal: 110, unit: "1 tbsp" },
-        "Ketchup Tbsp": { cal: 25, unit: "1 tbsp" },
+"Mixed Nuts": { cal: 220, unit: "1 handful" },
 
-        Omelette: { cal: 300, unit: "2 eggs" },
+Oil: { cal: 120, unit: "1 tbsp" },
+"Mayo Tbsp": { cal: 110, unit: "1 tbsp" },
+"Ketchup Tbsp": { cal: 25, unit: "1 tbsp" },
 
-        "Tuna Can": { cal: 250, unit: "1 can" },
+Omelette: { cal: 300, unit: "2 eggs" },
 
-        "Pasta Plate": { cal: 600, unit: "1 plate" },
+"Tuna Can": { cal: 250, unit: "1 can" },
 
-        "Protein Shake": { cal: 180, unit: "1 shake" },
+"Pasta Plate": { cal: 600, unit: "1 plate" },
 
-        "Soda Cup": { cal: 150, unit: "1 cup" },
+"Protein Shake": { cal: 180, unit: "1 shake" },
 
-        "Cheat Meal": { cal: 1200, unit: "1 meal" },
-      };
+"Soda Cup": { cal: 150, unit: "1 cup" },
 
-     const defaultExercises = {
-"Walking Treadmill": 5,
-"Running Treadmill": 11,
-
-"Gym Lifting": 6,
-
-"Basketball": 8,
-"Football": 10,
-
-"Slow Walking": 3
+"Cheat Meal": { cal: 1200, unit: "1 meal" },
 };
 
-      let customFoods = JSON.parse(localStorage.getItem("customFoods")) || {};
-      let customExercises =
-        JSON.parse(localStorage.getItem("customExercises")) || {};
+const defaultExercises = {
+"Walking Treadmill": 5,
+"Running Treadmill": 11,
+"Gym Lifting": 6,
+Basketball: 8,
+Football: 10,
+"Slow Walking": 3,
+};
 
-      let foods = { ...defaultFoods, ...customFoods };
-      let exercises = { ...defaultExercises, ...customExercises };
+let customFoods =
+JSON.parse(localStorage.getItem("customFoods")) || {};
 
-      let daily = JSON.parse(localStorage.getItem("daily")) || {
-        date: "",
-        entries: [],
-      };
-      let weightHistory =
+let customExercises =
+JSON.parse(localStorage.getItem("customExercises")) || {};
+
+let foods = { ...defaultFoods, ...customFoods };
+
+let exercises = {
+...defaultExercises,
+...customExercises,
+};
+
+let daily = JSON.parse(localStorage.getItem("daily")) || {
+date: "",
+entries: [],
+};
+
+let weightHistory =
 JSON.parse(localStorage.getItem("weightHistory")) || [];
 
+let selectedFood = null;
 
-      let selectedFood = null;
+/* DATE */
 
-      /* DATE */
+function tehranDate() {
+return new Date().toLocaleDateString("en-CA", {
+timeZone: "Asia/Tehran",
+});
+}
 
-      function tehranDate() {
-        return new Date().toLocaleDateString("en-CA", {
-          timeZone: "Asia/Tehran",
-        });
-      }
+function checkReset() {
+if (daily.date !== tehranDate()) {
+daily = { date: tehranDate(), entries: [] };
+saveDaily();
+}
+}
 
-      function checkReset() {
-        if (daily.date !== tehranDate()) {
-          daily = { date: tehranDate(), entries: [] };
-          saveDaily();
-        }
-      }
+function saveDaily() {
+localStorage.setItem("daily", JSON.stringify(daily));
+}
 
-      function saveDaily() {
-        localStorage.setItem("daily", JSON.stringify(daily));
-      }
+/* SEARCH */
 
-      /* SEARCH */
+function searchFood() {
+let q = foodSearch.value.toLowerCase();
 
-      function searchFood() {
-        let q = foodSearch.value.toLowerCase();
-        searchResults.innerHTML = "";
+searchResults.innerHTML = "";
 
-        Object.keys(foods)
-          .filter((f) => f.toLowerCase().includes(q))
-          .forEach((f) => {
-            searchResults.innerHTML += `<div class="search-item" onclick="selectFood('${f}')">${f}</div>`;
-          });
-      }
+Object.keys(foods)
+.filter((f) => f.toLowerCase().includes(q))
+.forEach((f) => {
+searchResults.innerHTML += `
 
-      
-       function selectFood(name) {
+<div class="search-item" onclick="selectFood('${f}')">
+${f}
+</div>`;
+    });
+}
+
+function selectFood(name) {
 selectedFood = name;
 
 foodSearch.value = name;
@@ -529,260 +537,329 @@ searchResults.innerHTML = "";
 foodAmount.placeholder = foods[name].unit;
 }
 
-   
+/* TARGET */
 
-      /* TARGET */
+function calculateTarget() {
+let info = JSON.parse(localStorage.getItem("userInfo"));
 
-      function calculateTarget() {
-        let info = JSON.parse(localStorage.getItem("userInfo"));
-        if (!info) return 0;
+if (!info) return 0;
 
-        let bmr =
-          info.sex === "male"
-            ? 10 * info.weight + 6.25 * info.height - 5 * info.age + 5
-            : 10 * info.weight + 6.25 * info.height - 5 * info.age - 161;
+let bmr =
+info.sex === "male"
+? 10 * info.weight +
+6.25 * info.height -
+5 * info.age +
+5
+: 10 * info.weight +
+6.25 * info.height -
+5 * info.age -
+161;
 
-        let tdee = bmr * info.activity;
-        let adjust = (info.goalSpeed * 7700) / 7;
+let tdee = bmr * info.activity;
 
-        return info.goalWeight < info.weight
-          ? Math.round(tdee - adjust)
-          : Math.round(tdee + adjust);
-      }
+let adjust = (info.goalSpeed * 7700) / 7;
 
-      /* UI */
+return info.goalWeight < info.weight
+? Math.round(tdee - adjust)
+: Math.round(tdee + adjust);
+}
 
-      function updateUI() {
-        checkReset();
+/* UI */
 
-        let target = calculateTarget();
-        targetCalories.innerText = target;
+function updateUI() {
+checkReset();
 
-        let consumed = 0;
-        let burned = 0;
+let target = calculateTarget();
 
-        daily.entries.forEach((e) => {
-          if (e.type === "food") consumed += e.cal;
-          if (e.type === "exercise") burned += e.cal;
-        });
+targetCalories.innerText = target;
 
-        let net = consumed - burned;
+let consumed = 0;
+let burned = 0;
 
-        let percent = target ? Math.min((net / target) * 100, 100) : 0;
+daily.entries.forEach((e) => {
+if (e.type === "food") consumed += e.cal;
 
-        progressBar.style.width = percent + "%";
-        progressBar.innerText = Math.round(percent) + "%";
 
-        calLeft.innerText = Math.round(target - net);
+if (e.type === "exercise") burned += e.cal;
 
-        entryList.innerHTML = "";
 
-        daily.entries.forEach((e, i) => {
-          entryList.innerHTML += `
+});
+
+let net = consumed - burned;
+
+let percent = target
+? Math.min((net / target) * 100, 100)
+: 0;
+
+progressBar.style.width = percent + "%";
+
+progressBar.innerText = Math.round(percent) + "%";
+
+calLeft.innerText = Math.round(target - net);
+
+entryList.innerHTML = "";
+
+daily.entries.forEach((e, i) => {
+entryList.innerHTML += `
+
 <div class="entry">
 <span>${e.text}</span>
 <button onclick="deleteEntry(${i})">x</button>
 </div>`;
-        });
+  });
 
-        loadInfoSummary();
-      }
+loadInfoSummary();
+}
 
-      /* ENTRIES */
+/* ENTRIES */
 
-      function addFood() {
-        let amount = parseFloat(foodAmount.value);
-        if (!selectedFood || !amount) return;
+function addFood() {
+let amount = parseFloat(foodAmount.value);
 
-        let cal = foods[selectedFood].cal * amount;
+if (!selectedFood || !amount) return;
 
-        daily.entries.push({
-          type: "food",
-          cal: cal,
-          text: `${selectedFood} +${Math.round(cal)} kcal`,
-        });
+let cal = foods[selectedFood].cal * amount;
 
-        saveDaily();
-        updateUI();
-      }
+daily.entries.push({
+type: "food",
+cal: cal,
+text: `${selectedFood} +${Math.round(cal)} kcal`,
+});
 
-      function addExercise() {
-        let e = exerciseSelect.value;
-        let m = parseFloat(exerciseMinutes.value);
-        if (!m) return;
+saveDaily();
 
-        let cal = exercises[e] * m;
+updateUI();
 
-        daily.entries.push({
-          type: "exercise",
-          cal: cal,
-          text: `${e} ${m}min -${Math.round(cal)} kcal`,
-        });
+foodAmount.value = "";
+}
 
-        saveDaily();
-        updateUI();
-      }
+function addExercise() {
+let e = exerciseSelect.value;
 
-      function deleteEntry(i) {
-        daily.entries.splice(i, 1);
-        saveDaily();
-        updateUI();
-      }
+let m = parseFloat(exerciseMinutes.value);
 
-      function resetDay() {
-        if (confirm("Reset today?")) {
-          daily = { date: tehranDate(), entries: [] };
-          saveDaily();
-          updateUI();
-        }
-      }
+if (!m) return;
 
-      /* USER INFO */
+let cal = exercises[e] * m;
 
-      function saveInfo() {
-        let info = {
-          age: +age.value,
-          sex: sex.value,
-          height: +height.value,
-          weight: +weight.value,
-          goalWeight: +goalWeight.value,
-          goalSpeed: +goalSpeed.value,
-          activity: +activity.value,
-        };
+daily.entries.push({
+type: "exercise",
+cal: cal,
+text: `${e} ${m}min -${Math.round(cal)} kcal`,
+});
 
-        localStorage.setItem("userInfo", JSON.stringify(info));
+saveDaily();
 
-        updateUI();
-      }
+updateUI();
+}
 
-      function loadInfoSummary() {
-        let info = JSON.parse(localStorage.getItem("userInfo"));
+function deleteEntry(i) {
+daily.entries.splice(i, 1);
 
-        if (!info) {
-          infoSummary.innerText = "No info saved.";
-          return;
-        }
+saveDaily();
 
-        infoSummary.innerText = `Age ${info.age} • ${info.weight}kg → ${info.goalWeight}kg`;
+updateUI();
+}
 
-        age.value = info.age;
-        height.value = info.height;
-        weight.value = info.weight;
-        goalWeight.value = info.goalWeight;
-        goalSpeed.value = info.goalSpeed;
-        sex.value = info.sex;
-        activity.value = info.activity;
-      }
+function resetDay() {
+if (confirm("Reset today?")) {
+daily = { date: tehranDate(), entries: [] };
 
-      /* CUSTOM FOODS */
+```
+saveDaily();
 
-      function addCustomFood() {
-        let name = customFoodName.value;
-        let cal = parseFloat(customFoodCalories.value);
-        let unit = customFoodUnit.value;
+updateUI();
+```
 
-        if (!name || !cal || !unit) return;
+}
+}
 
-        customFoods[name] = { cal, unit };
+/* USER INFO */
 
-        localStorage.setItem("customFoods", JSON.stringify(customFoods));
+function saveInfo() {
+let info = {
+age: +age.value,
+sex: sex.value,
+height: +height.value,
+weight: +weight.value,
+goalWeight: +goalWeight.value,
+goalSpeed: +goalSpeed.value,
+activity: +activity.value,
+};
 
-        foods = { ...defaultFoods, ...customFoods };
+localStorage.setItem(
+"userInfo",
+JSON.stringify(info)
+);
 
-        renderCustomFoods();
-      }
+updateUI();
+}
 
-      function deleteCustomFood(name) {
-        delete customFoods[name];
+function loadInfoSummary() {
+let info = JSON.parse(
+localStorage.getItem("userInfo")
+);
 
-        localStorage.setItem("customFoods", JSON.stringify(customFoods));
+if (!info) {
+infoSummary.innerText = "No info saved.";
 
-        foods = { ...defaultFoods, ...customFoods };
 
-        renderCustomFoods();
-      }
+return;
 
-      function renderCustomFoods() {
-        customFoodList.innerHTML = "";
 
-        Object.keys(customFoods).forEach((name) => {
-          customFoodList.innerHTML += `
+}
+
+infoSummary.innerText =
+`Age ${info.age} • ${info.weight}kg → ${info.goalWeight}kg`;
+
+age.value = info.age;
+height.value = info.height;
+weight.value = info.weight;
+goalWeight.value = info.goalWeight;
+goalSpeed.value = info.goalSpeed;
+sex.value = info.sex;
+activity.value = info.activity;
+}
+
+/* CUSTOM FOODS */
+
+function addCustomFood() {
+let name = customFoodName.value;
+
+let cal = parseFloat(customFoodCalories.value);
+
+let unit = customFoodUnit.value;
+
+if (!name || !cal || !unit) return;
+
+customFoods[name] = { cal, unit };
+
+localStorage.setItem(
+"customFoods",
+JSON.stringify(customFoods)
+);
+
+foods = { ...defaultFoods, ...customFoods };
+
+renderCustomFoods();
+}
+
+function deleteCustomFood(name) {
+delete customFoods[name];
+
+localStorage.setItem(
+"customFoods",
+JSON.stringify(customFoods)
+);
+
+foods = { ...defaultFoods, ...customFoods };
+
+renderCustomFoods();
+}
+
+function renderCustomFoods() {
+customFoodList.innerHTML = "";
+
+Object.keys(customFoods).forEach((name) => {
+customFoodList.innerHTML += `
+
 <div class="entry">
 <span>${name}</span>
 <button onclick="deleteCustomFood('${name}')">x</button>
 </div>`;
-        });
-      }
+  });
+}
 
-      /* CUSTOM EXERCISES */
+/* CUSTOM EXERCISES */
 
-      function addCustomExercise() {
-        let name = customExerciseName.value;
-        let cal = parseFloat(customExerciseCalories.value);
+function addCustomExercise() {
+let name = customExerciseName.value;
 
-        if (!name || !cal) return;
+let cal = parseFloat(
+customExerciseCalories.value
+);
 
-        customExercises[name] = cal;
+if (!name || !cal) return;
 
-        localStorage.setItem(
-          "customExercises",
-          JSON.stringify(customExercises),
-        );
+customExercises[name] = cal;
 
-        exercises = { ...defaultExercises, ...customExercises };
+localStorage.setItem(
+"customExercises",
+JSON.stringify(customExercises)
+);
 
-        loadExercises();
-        renderCustomExercises();
-      }
+exercises = {
+...defaultExercises,
+...customExercises,
+};
 
-      function deleteCustomExercise(name) {
-        delete customExercises[name];
+loadExercises();
 
-        localStorage.setItem(
-          "customExercises",
-          JSON.stringify(customExercises),
-        );
+renderCustomExercises();
+}
 
-        exercises = { ...defaultExercises, ...customExercises };
+function deleteCustomExercise(name) {
+delete customExercises[name];
 
-        loadExercises();
-        renderCustomExercises();
-      }
+localStorage.setItem(
+"customExercises",
+JSON.stringify(customExercises)
+);
 
-      function renderCustomExercises() {
-        customExerciseList.innerHTML = "";
+exercises = {
+...defaultExercises,
+...customExercises,
+};
 
-        Object.keys(customExercises).forEach((name) => {
-          customExerciseList.innerHTML += `
+loadExercises();
+
+renderCustomExercises();
+}
+
+function renderCustomExercises() {
+customExerciseList.innerHTML = "";
+
+Object.keys(customExercises).forEach((name) => {
+customExerciseList.innerHTML += `
+
 <div class="entry">
 <span>${name}</span>
 <button onclick="deleteCustomExercise('${name}')">x</button>
 </div>`;
-        });
-      }
+  });
+}
 
-      function loadExercises() {
-        exerciseSelect.innerHTML = "";
+function loadExercises() {
+exerciseSelect.innerHTML = "";
 
-        Object.keys(exercises).forEach((e) => {
-          exerciseSelect.innerHTML += `<option>${e}</option>`;
-        });
-      }
+Object.keys(exercises).forEach((e) => {
+exerciseSelect.innerHTML += `
 
-      /* NAV */
+<option>${e}</option>`;
+  });
+}
 
-      function switchTab(tab, e) {
-        entriesTab.style.display = tab === "entries" ? "block" : "none";
-        infoTab.style.display = tab === "info" ? "block" : "none";
+/* NAV */
 
-        document
-          .querySelectorAll(".tab")
-          .forEach((t) => t.classList.remove("active"));
+function switchTab(tab, e) {
+entriesTab.style.display =
+tab === "entries" ? "block" : "none";
 
-        e.target.classList.add("active");
-      }
-      
-            let weightChart;
+infoTab.style.display =
+tab === "info" ? "block" : "none";
+
+document
+.querySelectorAll(".tab")
+.forEach((t) =>
+t.classList.remove("active")
+);
+
+e.target.classList.add("active");
+}
+
+/* WEIGHT TRACKER */
+
+let weightChart;
 
 function saveWeight() {
 let weight = parseFloat(weightInput.value);
@@ -798,6 +875,12 @@ localStorage.setItem(
 "weightHistory",
 JSON.stringify(weightHistory)
 );
+
+renderWeightChart();
+
+weightInput.value = "";
+}
+
 function undoWeight() {
 if (weightHistory.length === 0) return;
 
@@ -824,19 +907,19 @@ JSON.stringify(weightHistory)
 renderWeightChart();
 }
 
-renderWeightChart();
-
-weightInput.value = "";
-}
-
 function renderWeightChart() {
-const ctx = document.getElementById("weightChart");
+const ctx =
+document.getElementById("weightChart");
 
 if (!ctx) return;
 
-const labels = weightHistory.map((w) => w.date);
+const labels = weightHistory.map(
+(w) => w.date
+);
 
-const data = weightHistory.map((w) => w.weight);
+const data = weightHistory.map(
+(w) => w.weight
+);
 
 if (weightChart) {
 weightChart.destroy();
@@ -845,47 +928,56 @@ weightChart.destroy();
 weightChart = new Chart(ctx, {
 type: "line",
 
-data: {
-labels: labels,
 
-datasets: [
-{
-label: "Weight (kg)",
-data: data,
-tension: 0.3,
-},
-],
+data: {
+  labels: labels,
+
+  datasets: [
+    {
+      label: "Weight (kg)",
+      data: data,
+      tension: 0.3,
+    },
+  ],
 },
 
 options: {
-responsive: true,
+  responsive: true,
 
-plugins: {
-legend: {
-display: true,
-},
+  plugins: {
+    legend: {
+      display: true,
+    },
+  },
+
+  scales: {
+    y: {
+      beginAtZero: false,
+    },
+  },
 },
 
-scales: {
-y: {
-beginAtZero: false,
-},
-},
-},
 
 });
 }
 
+/* INIT */
 
-      /* INIT */
+applyDarkMode();
 
-      applyDarkMode();
-      loadExercises();
-      renderCustomFoods();
-      renderCustomExercises();
-      loadInfoSummary();
-      updateUI();
-      renderWeightChart();
+loadExercises();
+
+renderCustomFoods();
+
+renderCustomExercises();
+
+loadInfoSummary();
+
+updateUI();
+
+renderWeightChart();
+
+       
     </script>
   </body>
 </html>
