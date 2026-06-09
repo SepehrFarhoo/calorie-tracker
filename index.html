@@ -306,6 +306,14 @@
   <button class="primary" onclick="saveWeight()">
     Save Weight
   </button>
+          <button onclick="undoWeight()" class="danger">
+  Undo Last
+</button>
+
+<button onclick="resetWeights()" class="danger">
+  Reset Weights
+</button>
+
 
 <canvas id="weightChart" height="120"></canvas>
 
@@ -790,6 +798,31 @@ localStorage.setItem(
 "weightHistory",
 JSON.stringify(weightHistory)
 );
+function undoWeight() {
+if (weightHistory.length === 0) return;
+
+weightHistory.pop();
+
+localStorage.setItem(
+"weightHistory",
+JSON.stringify(weightHistory)
+);
+
+renderWeightChart();
+}
+
+function resetWeights() {
+if (!confirm("Delete all weight history?")) return;
+
+weightHistory = [];
+
+localStorage.setItem(
+"weightHistory",
+JSON.stringify(weightHistory)
+);
+
+renderWeightChart();
+}
 
 renderWeightChart();
 
