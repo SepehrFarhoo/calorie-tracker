@@ -484,9 +484,16 @@
       }
 
       function selectFood(name) {
-        selectedFood = name;
-        foodSearch.value = name;
-        searchResults.innerHTML = "";
+       function selectFood(name) {
+selectedFood = name;
+
+foodSearch.value = name;
+
+searchResults.innerHTML = "";
+
+foodAmount.placeholder = foods[name].unit;
+}
+
       }
 
       /* TARGET */
