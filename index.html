@@ -812,38 +812,37 @@ weightChart.destroy();
 weightChart = new Chart(ctx, {
 type: "line",
 
-```
 data: {
-  labels: labels,
+labels: labels,
 
-  datasets: [
-    {
-      label: "Weight (kg)",
-      data: data,
-      tension: 0.3,
-    },
-  ],
+datasets: [
+{
+label: "Weight (kg)",
+data: data,
+tension: 0.3,
+},
+],
 },
 
 options: {
-  responsive: true,
+responsive: true,
 
-  plugins: {
-    legend: {
-      display: true,
-    },
-  },
-
-  scales: {
-    y: {
-      beginAtZero: false,
-    },
-  },
+plugins: {
+legend: {
+display: true,
 },
-```
+},
+
+scales: {
+y: {
+beginAtZero: false,
+},
+},
+},
 
 });
 }
+
 
       /* INIT */
 
