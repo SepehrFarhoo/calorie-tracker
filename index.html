@@ -425,11 +425,17 @@
         "Cheat Meal": { cal: 1200, unit: "1 meal" },
       };
 
-      const defaultExercises = {
-        Walking: 5,
-        Running: 10,
-        Cycling: 8,
-      };
+     const defaultExercises = {
+"Walking Treadmill": 5,
+"Running Treadmill": 11,
+
+"Gym Lifting": 6,
+
+"Basketball": 8,
+"Football": 10,
+
+"Slow Walking": 3
+};
 
       let customFoods = JSON.parse(localStorage.getItem("customFoods")) || {};
       let customExercises =
